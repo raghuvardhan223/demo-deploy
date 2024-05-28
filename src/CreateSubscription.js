@@ -71,7 +71,7 @@ const CreateSubscription = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/cancel-subscription', {
+             await axios.post('http://localhost:5000/api/cancel-subscription', {
                 subscription_id: subscriptionId
             });
             alert('Subscription cancelled successfully!');
