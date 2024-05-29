@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css'; // Assuming you create and import App.css for styling
 
-const API_URL = 'https://demo-deploy1.onrender.com';
+const API_URL = 'https://demo-deploy1.onrender.com/api';
 
 const CreateSubscription = () => {
     const [formData, setFormData] = useState({
