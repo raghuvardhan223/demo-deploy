@@ -19,7 +19,7 @@ const CreateSubscription = () => {
     useEffect(() => {
         const fetchPlans = async () => {
             try {
-                const response = await axios.get(`${API_URL}/plans`);
+                const response = await axios.get(${API_URL}/plans);
                 setPlans(response.data);
                 setLoading(false);
             } catch (error) {
@@ -43,15 +43,11 @@ const CreateSubscription = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${API_URL}/create-subscription`, formData);
-            alert('Subscription created successfully!');
-           if (response.data.short_url) {
+            const response = await axios.post(${API_URL}/create-subscription, formData);
             alert('Subscription created successfully!');
             setSubscriptionId(response.data.id);
-            console.log('Opening URL:', response.data.short_url); // Log the URL to be opened
 
             const paymentWindow = window.open(response.data.short_url, '_blank');
-            console.log('Payment window:', paymentWindow); // Log the payment window object
 
             const pollSubscriptionStatus = setInterval(async () => {
                 const validateResponse = await axios.get(${API_URL}/create-subscription/${response.data.id});
@@ -61,55 +57,14 @@ const CreateSubscription = () => {
                     setIsSubscriptionActive(true);
                     alert("Subscription active");
                     clearInterval(pollSubscriptionStatus);
-                    if (paymentWindow) {
-                        paymentWindow.close();
-                    }
+                    paymentWindow.close();
                 }
             }, 3000);
-        } else {
-            console.error('short_url is missing in the response.');
-        }
-    } catch (error) {
+        } catch (error) {
             alert('Error creating subscription');
             console.error(error);
         }
     };
-
-
-//     const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//         const response = await axios.post(`${API_URL}/create-subscription`, formData);
-//         console.log('Response:', response.data); // Log the entire response
-//         if (response.data.short_url) {
-//             alert('Subscription created successfully!');
-//             setSubscriptionId(response.data.id);
-//             console.log('Opening URL:', response.data.short_url); // Log the URL to be opened
-
-//             const paymentWindow = window.open(response.data.short_url, '_blank');
-//             console.log('Payment window:', paymentWindow); // Log the payment window object
-
-//             const pollSubscriptionStatus = setInterval(async () => {
-//                 const validateResponse = await axios.get(${API_URL}/create-subscription/${response.data.id});
-//                 const subscriptionStatus = validateResponse.data.status;
-
-//                 if (subscriptionStatus === "active") {
-//                     setIsSubscriptionActive(true);
-//                     alert("Subscription active");
-//                     clearInterval(pollSubscriptionStatus);
-//                     if (paymentWindow) {
-//                         paymentWindow.close();
-//                     }
-//                 }
-//             }, 3000);
-//         } else {
-//             console.error('short_url is missing in the response.');
-//         }
-//     } catch (error) {
-//         alert('Error creating subscription');
-//         console.error(error);
-//     }
-// };
 
     const handleCancel = async () => {
         if (!subscriptionId) {
@@ -118,7 +73,7 @@ const CreateSubscription = () => {
         }
 
         try {
-            await axios.post(`${API_URL}/cancel-subscription`, {
+            await axios.post(${API_URL}/cancel-subscription, {
                 subscription_id: subscriptionId
             });
             alert('Subscription cancelled successfully!');
