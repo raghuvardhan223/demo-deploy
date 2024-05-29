@@ -41,30 +41,39 @@ const CreateSubscription = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post(`${API_URL}/create-subscription`, formData);
+    e.preventDefault();
+    try {
+        const response = await axios.post(${API_URL}/create-subscription, formData);
+        console.log('Response:', response.data); // Log the entire response
+        if (response.data.short_url) {
             alert('Subscription created successfully!');
             setSubscriptionId(response.data.id);
+            console.log('Opening URL:', response.data.short_url); // Log the URL to be opened
 
             const paymentWindow = window.open(response.data.short_url, '_blank');
+            console.log('Payment window:', paymentWindow); // Log the payment window object
 
             const pollSubscriptionStatus = setInterval(async () => {
-                const validateResponse = await axios.get(`${API_URL}/create-subscription/${response.data.id}`);
+                const validateResponse = await axios.get(${API_URL}/create-subscription/${response.data.id});
                 const subscriptionStatus = validateResponse.data.status;
 
                 if (subscriptionStatus === "active") {
                     setIsSubscriptionActive(true);
                     alert("Subscription active");
                     clearInterval(pollSubscriptionStatus);
-                    paymentWindow.close();
+                    if (paymentWindow) {
+                        paymentWindow.close();
+                    }
                 }
             }, 3000);
-        } catch (error) {
-            alert('Error creating subscription');
-            console.error(error);
+        } else {
+            console.error('short_url is missing in the response.');
         }
-    };
+    } catch (error) {
+        alert('Error creating subscription');
+        console.error(error);
+    }
+};
 
     const handleCancel = async () => {
         if (!subscriptionId) {
