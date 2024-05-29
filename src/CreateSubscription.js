@@ -50,7 +50,7 @@ const CreateSubscription = () => {
             const paymentWindow = window.open(response.data.short_url, '_blank');
 
             const pollSubscriptionStatus = setInterval(async () => {
-                const validateResponse = await axios.get(${API_URL}/create-subscription/${response.data.id});
+                const validateResponse = await axios.get(`${API_URL}/create-subscription/${response.data.id}`);
                 const subscriptionStatus = validateResponse.data.status;
 
                 if (subscriptionStatus === "active") {
