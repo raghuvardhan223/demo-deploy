@@ -43,7 +43,7 @@ const CreateSubscription = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(${API_URL}/create-subscription, formData);
+            const response = await axios.post(`${API_URL}/create-subscription`, formData);
             alert('Subscription created successfully!');
             setSubscriptionId(response.data.id);
 
