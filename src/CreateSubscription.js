@@ -19,7 +19,7 @@ const CreateSubscription = () => {
     useEffect(() => {
         const fetchPlans = async () => {
             try {
-                const response = await axios.get(${API_URL}/plans);
+                const response = await axios.get(`${API_URL}/plans`);
                 setPlans(response.data);
                 setLoading(false);
             } catch (error) {
@@ -73,7 +73,7 @@ const CreateSubscription = () => {
         }
 
         try {
-            await axios.post(${API_URL}/cancel-subscription, {
+            await axios.post(`${API_URL}/cancel-subscription`, {
                 subscription_id: subscriptionId
             });
             alert('Subscription cancelled successfully!');
